@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 // Thus for each crud operation, just need to verify the webtoken
 // User login setup
 
+// Create user
 // Register User
 router.post('/register', async (req, res) => {
     const newUser = new User({

@@ -18,7 +18,6 @@ const verifyToken = (req, res, next) => {
                 // Both UserID and isAdmin json is encoded and converted into a token
                 // Which is now decoded back into a user
                 req.user = user;
-                console.log(req.user);
                 // next breaks from the function and returns back to the caller/router
                 next();
             }

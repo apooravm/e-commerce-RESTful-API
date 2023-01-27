@@ -3,11 +3,16 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+mongoose.set('strictQuery', true);
+
 app.use(express.json());
 
 // Importing routes
 const userRoute = require('./routes/user');
 const authRoute = require('./routes/auth');
+const productRoute = require('./routes/product');
+const cartRoute = require('./routes/cart');
+const orderRoute = require('./routes/order');
 
 mongoose
 	.connect(process.env.MONGO_URL)
@@ -22,6 +27,12 @@ mongoose
 app.use('/api/user', userRoute);
 
 app.use('/api/auth', authRoute);
+
+app.use('/api/product', productRoute);
+
+app.use('/api/cart', cartRoute);
+
+app.use('/api/order', orderRoute);
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
