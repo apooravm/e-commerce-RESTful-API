@@ -37,10 +37,3 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
 	console.log(`Server live on https://localhost:${port}`);
 })
-
-/*
-Qs for siksha lady
-how many times can we ans ielts after payment
-work visa after diploma vs after masters
-
-*/
