@@ -8,6 +8,7 @@ const {
 } = require('./verifyToken');
 
 // Create Cart
+// a token provided in the header
 router.post("/", verifyToken, async (req, res) => {
     const newCart = new Cart(req.body);
 
@@ -18,6 +19,14 @@ router.post("/", verifyToken, async (req, res) => {
         res.status(500).json(error);
     }
 });
+
+// Adding Products to cart
+// token in headers
+// productId in body
+router.put("/:id", async (req, res) => {
+    // $push: {products: newProduct}
+    
+})
 
 // Update Cart
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {

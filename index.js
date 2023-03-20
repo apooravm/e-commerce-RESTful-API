@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require('cors');
 
 mongoose.set('strictQuery', true);
 
 app.use(express.json());
+app.use(cors());
 
 // Importing routes
 const userRoute = require('./routes/user');
@@ -24,6 +26,12 @@ mongoose
 	})
 
 // /api/user/userTest 
+let id_val = 1;
+app.get("/api/getProductId", (req, res) => {
+	res.status(200).json({"product_id": id_val});
+	id_val += 1;
+})
+
 app.use('/api/user', userRoute);
 
 app.use('/api/auth', authRoute);
@@ -38,3 +46,10 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
 	console.log(`Server live on https://localhost:${port}`);
 })
+
+/*
+MONGO_URL=mongodb+srv://admin:1234@mondodb-basics.sgwdtfx.mongodb.net/?retryWrites=true&w=majority
+USER_PASSWORD_HASH=1234
+JWT_KEY=1234
+PORT=5000
+*/

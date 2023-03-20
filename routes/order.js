@@ -8,7 +8,7 @@ const {
 } = require('./verifyToken');
 
 // Create Order
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyTokenAndAuthorization, async (req, res) => {
     const newOrder = new Order(req.body);
 
     try {

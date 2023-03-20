@@ -9,36 +9,51 @@ const jwt = require('jsonwebtoken');
 
 // Create user
 // Register User
+// Requires: username(unique), password, email(unique), phone, address
 router.post('/register', async (req, res) => {
     const newUser = new User({
         username: req.body.username,
         email: req.body.email,
         // Hash the password instead of saving directly to db
-        password: cryptoJS.AES.encrypt(req.body.password, process.env.API_AUTH_KEY).toString()
-    })
+        password: cryptoJS.AES.encrypt(req.body.password, process.env.USER_PASSWORD_HASH).toString(),
+        // req.body.phone ? req.body.phone : null,
+        phone: req.body.phone,
+        address: {
+            street: req.body.address.street,
+            city: req.body.address.city,
+            state: req.body.address.state,
+            country: req.body.address.country,
+        }
+    });
 
-    // newUser created with User schema but not been updated/saved
-
+    // newUser created with User schema but not been updated/saved  
     // .save => async method, thus needs async in when calling router.post()
     try {
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
-        console.log()
     } catch(err) {
-        res.status(500).json(err);
-        // console.log(err);
+        const checkUser = await User.findOne({ username: req.body.username });
+        if (checkUser) {
+            // 409 => Conflict user already exists
+            res.status(409).json("User Already Exists");
+        } else {
+            console.log(err)
+            res.status(500).json(err);
+            // console.log(err);
+        }
     }
 })
 
+// Login takes in username and password only
 router.post('/login', async (req, res) => {
     try {
         // find a single user
-        const user = await User.findOne({ username: req.body.username })
-        !user && res.status(401).json("Wrong Username")
+        const user = await User.findOne({ username: req.body.username });
+        !user && res.status(401).json("Wrong Username");
 
-        const hashedPass = cryptoJS.AES.decrypt(user.password, process.env.API_AUTH_KEY);
+        const hashedPass = cryptoJS.AES.decrypt(user.password, process.env.USER_PASSWORD_HASH);
         const decoded_PASS = hashedPass.toString(cryptoJS.enc.Utf8);
-        decoded_PASS !== req.body.password && res.status(401).json("Wrong Password")
+        decoded_PASS !== req.body.password && res.status(401).json("Wrong Password");
 
         // secret jwt key is passed along with the expiry time
         // Both UserID and iSAdmin are encoded through jwt
