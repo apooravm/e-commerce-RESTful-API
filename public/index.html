@@ -1,55 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Page</title>
-    <script defer src="publicApp.js"></script>
-    <style>
-       /* main:hover {
-           background-color: aquamarine;
-       } */
-       /* main {
-        margin: auto;
-        right: 0px;
-        width: 300px;
-        height: 50%;
-        padding: 10px;
-
-       } */
-
-       main {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-       }
-       .buttonClass {
-          border-radius: 2px;
-          border: 0px;
-          cursor: pointer;
-       }
-
-       .buttonClass:hover {
-         background-color: rgba(127, 255, 212, 0.384);
-       }
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Api Help</title>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 15px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
     </style>
 </head>
 <body>
-    <h1>Hi 😢</h1>
-    <main>
-        <!-- <form action="/getInfo" method="post">
-            <input name="inputValue" type="text" id="inputVal:ID" style="padding: 20px;" autocomplete="off">
-            <button type="submit" style="padding: 20px;">Submit</button>
-        </form> -->
-        <div id="buttonValuePair">
-          <input class="inputClass" name="inputValue" type="text" id="inputValID" style="padding: 20px;" autocomplete="off">
-          <button type="submit" style="padding: 20px;" onclick="postValue()" class="buttonClass">Submit</button>
-        </div>
-    </main>
+  <h1>API Help Page</h1>
+  <h2>Products</h2>
+  <table>
+    <tr>
+      <th>API</th>
+      <th>Route</th>
+      <th>Description</th>
+      <th>Admin</th>
+      <th>Auth</th>
+    </tr>
+    <tr>
+      <td>GET All products</td>
+      <td>/api/product/</td>
+      <td>Get Products JSON format <br>(?admin=adminId for admin specific products)<br>(?new=true for the 5 most recent products)</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>GET a single Product</td>
+      <td>api/product/:id</td>
+      <td>Get a single product given the :id</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>POST a product</td>
+      <td>/api/product/:userId</td>
+      <td>Post a product to the database: requires the userId to be a valid adminId</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>POST a product review</td>
+      <td>api/product/review/post</td>
+      <td>Post a product review to the database; userId and other details in the body of hte request</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET all product reviews</td>
+      <td>api/product/review/get/:id</td>
+      <td>Get all the reviews for a produtc given the :id </td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>PUT/Update a product</td>
+      <td>api/product/:userId/:productId</td>
+      <td>Update a product in the database given the :userId, :productId</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>DELETE a product</td>
+      <td>api/product/delete/:userId/:productId</td>
+      <td>Delete a product given the :userId, product:Id</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+  </table>
 
-    <button onclick="getLocation()">Get location</button>
-    <div id="locationCoords"></div>
+  <h2>Users</h2>
+  <table>
+    <tr>
+      <th>API</th>
+      <th>Route</th>
+      <th>Description</th>
+      <th>Admin</th>
+      <th>Auth</th>
+    </tr>
+    <tr>
+      <td>POST/Register a User</td>
+      <td>api/auth/register</td>
+      <td>Register a user to the database; the userinfo to be provided in the body</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>POST/Login a User</td>
+      <td>api/auth/login</td>
+      <td>Login a User to the website. Requires a username and password. <br>Returns an accesstoken which should be stored in the browsers local storage<br> and sent as a header for every request</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>PUT/Update a User</td>
+      <td>api/user/:id</td>
+      <td>Update a user given the userInfo in the body</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>PUT/Update the User Cart</td>
+      <td>api/user/cart/add/:userId</td>
+      <td>Update the User Cart</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>DELETE the User</td>
+      <td>api/user/:id</td>
+      <td>Delete the User</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>GET a single User</td>
+      <td>api/user/find/:id</td>
+      <td>Get a user given the :id</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET all Users</td>
+      <td>api/user/</td>
+      <td>Get all the users</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET user stats</td>
+      <td>api/user/stats</td>
+      <td>Get the user stats ie; total number of users in a certain month</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET admin added products</td>
+      <td>api/user/admin/get/:id</td>
+      <td>Get all of the admin added Products</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+  </table>
+  <h2>Orders</h2>
+  <table>
+    <tr>
+      <th>API</th>
+      <th>Route</th>
+      <th>Description</th>
+      <th>Admin</th>
+      <th>Auth</th>
+    </tr>
+    <tr>
+      <td>POST/Create an Order</td>
+      <td>api/order/</td>
+      <td>Create an Order; Details to be provided in the body</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>PUT/Update an Order</td>
+      <td>api/order/:id</td>
+      <td>Update an Order in the database; Details to be provided in the body</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET a User Order</td>
+      <td>api/order/find/:userId</td>
+      <td>Get a User Order given the :userId</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>GET all Orders</td>
+      <td>api/order/</td>
+      <td>Get all orders</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+  </table>
 </body>
 </html>

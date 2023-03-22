@@ -32,6 +32,14 @@ app.get("/api/getProductId", (req, res) => {
 	id_val += 1;
 })
 
+app.get("/api/help", (req, res) => {
+	res.status(200).sendFile(__dirname + '/public/index.html', (err) => {
+		if (err) {
+			res.status(500).json(err);
+		}
+	})
+})
+
 app.use('/api/user', userRoute);
 
 app.use('/api/auth', authRoute);
@@ -44,7 +52,7 @@ app.use('/api/order', orderRoute);
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-	console.log(`Server live on https://localhost:${port}`);
+	console.log(`Server live on http://localhost:${port}`);
 })
 
 /*
