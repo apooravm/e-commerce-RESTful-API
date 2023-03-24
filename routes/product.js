@@ -79,7 +79,8 @@ router.put("/review/post", verifyTokenAndAuthorization, async (req, res) => {
 })
 
 // get all the reviews of a product
-router.get("/review/get/:id", verifyTokenAndAuthorization, async (req, res) => {
+// No auth required
+router.get("/review/get/:id", async (req, res) => {
     try {
         const prod = await Product.findById(req.params.id);
         const reviews = prod.reviews;
