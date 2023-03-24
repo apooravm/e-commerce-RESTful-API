@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
     {
+        first_name: { type: String, required: true },
+        last_name: { type: String, required: true },
         username: { type: String, required: true, unique: true },
         email: { type: String, required: true, unique: true},
         password: { type: String, required: true},
@@ -23,7 +25,7 @@ const UserSchema = new mongoose.Schema(
                 quantity: { type: Number, default: 1, min: 1, required: true }
             }
         ],
-        isAdmin: { type: Boolean, default: true},
+        isAdmin: { type: Boolean, default: false},
         productsAdded: [
             { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true }
         ]

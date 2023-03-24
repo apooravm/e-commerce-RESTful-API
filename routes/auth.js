@@ -12,6 +12,8 @@ const jwt = require('jsonwebtoken');
 // Requires: username(unique), password, email(unique), phone, address
 router.post('/register', async (req, res) => {
     const newUser = new User({
+        first_name: req.body.first_name.toUpperCase(),
+        last_name: req.body.last_name.toUpperCase(),
         username: req.body.username,
         email: req.body.email,
         // Hash the password instead of saving directly to db
@@ -22,6 +24,7 @@ router.post('/register', async (req, res) => {
             street: req.body.address.street,
             city: req.body.address.city,
             state: req.body.address.state,
+            postal_code: req.body.address.postal_code,
             country: req.body.address.country,
         }
     });
